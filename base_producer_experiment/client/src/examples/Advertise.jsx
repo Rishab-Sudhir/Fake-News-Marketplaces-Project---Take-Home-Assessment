@@ -25,7 +25,8 @@ import {
       [player.round.get("productionQuality"),
       player.round.get("advertisementQuality"),
       player.round.get("priceOfProduct"),
-      player.round.get("productionCost")])
+      player.round.get("productionCost"),
+      player.round.get("warrantAmount")])
 
       player.stage.set("submit", true);//player.stage.submit();
     }
@@ -46,6 +47,11 @@ import {
     function handlePriceChoice(e, priceOfProduct) {
       player.round.set("priceOfProduct", priceOfProduct);
       console.log("Saved priceOfProduct to player.round object: ", priceOfProduct);
+    }
+
+    function handleWarrantChoice(e, warrantAmount) {
+      player.round.set("warrantAmount", warrantAmount);
+      console.log("Saved warrantAmount to player.round object: ", warrantAmount);
     }
   
     const isResultStage = stage.get("name") === "result";
