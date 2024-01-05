@@ -14,6 +14,9 @@ import {
     const players = usePlayers();
     const stage = useStage();
     const roundNumberText = 'round' + roundNumber;
+
+    //Const for checking the state of the warrantChoice
+    const [warrantChoice, setWarrantChoice] = useState(null);
     //console.log('roundNumberText', roundNumberText);
     function handleChange() {
       console.log("something happened");
@@ -53,6 +56,8 @@ import {
 
     function handleWarrantChoice(e, warrantChoice) {
       player.round.set("warrantChoice", warrantChoice);
+      //Handling the state change
+      setWarrantChoice(warrantChoice);
       console.log("Saved warrantChoice to player.round object: ", warrantChoice);
     }
 
@@ -144,6 +149,13 @@ import {
           <WarrantChoiceButton text={'No'} on_button_click={(e) => handleWarrantChoice(e, "No")}></WarrantChoiceButton>
           </div>
 
+          <br/><br/><br/><br/><br/>
+
+          {/* Conditional rendering based on warrantChoice */}
+          {warrantChoice === "Yes" && (
+            <h1><b>Set the warrant amount:</b></h1>
+          )}
+
           <ProfitMarginCalculation producerPlayer = {player}/>
 
           <br/><br/>
@@ -220,7 +232,7 @@ import {
   function WarrantChoiceButton({text, on_button_click}){
     return(
       <Button handleClick={on_button_click} >
-          🏷️ {text} 
+          {text} 
             </Button>
     )
   }
