@@ -27,7 +27,8 @@ import {
       player.round.get("priceOfProduct"),
       player.round.get("productionCost"),
       player.round.get("warrantChoice"),
-      player.round.get("warrantAmount")])
+      player.round.get("warrantAmount")
+    ])
 
       player.stage.set("submit", true);//player.stage.submit();
     }
@@ -131,6 +132,18 @@ import {
           <PriceButton text={'$10'} on_button_click={(e) => handlePriceChoice(e, 10)}></PriceButton>
           <PriceButton text={'$15'} on_button_click={(e) => handlePriceChoice(e, 15)}></PriceButton>
           </div>
+
+          <br/><br/><br/><br/><br/>
+          <h1><b>Would you like want a warrant for your product?</b></h1>
+
+          <p><strong>Note: </strong>An express warranty is an expressed guarantee from a seller or manufacturer <br/>  to a buyer that the purchased product performs according to certain specifications.</p>
+          <p>Anyone, including a competitor, could challenge the warrant if the ad's claims are false.</p>
+
+          <div className="flex justify-center space-x-4"> 
+          <WarrantChoiceButton text={'Yes'} on_button_click={(e) => handleWarrantChoice(e, "Yes")}></WarrantChoiceButton>
+          <WarrantChoiceButton text={'No'} on_button_click={(e) => handleWarrantChoice(e, "No")}></WarrantChoiceButton>
+          </div>
+
           <ProfitMarginCalculation producerPlayer = {player}/>
 
           <br/><br/>
@@ -200,6 +213,14 @@ import {
     return(
       <Button handleClick={on_button_click} >
           🏷️ Sell my product for {text} {price}
+            </Button>
+    )
+  }
+
+  function WarrantChoiceButton({text, on_button_click}){
+    return(
+      <Button handleClick={on_button_click} >
+          🏷️ {text} 
             </Button>
     )
   }
