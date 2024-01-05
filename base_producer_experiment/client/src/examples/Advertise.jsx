@@ -116,7 +116,8 @@ import {
         </div>
 
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        
         <h1><b>You are a producer of toothpaste</b></h1>
           <h1><b>Choose what to produce.</b> All your products this round will be the quality you select. <br/> Your current choice is to produce: <b>{player.round.get("productionQuality")} </b> quality toothspaste.</h1>
           <div className="flex justify-center space-x-4"> {/* This flex container will lay out its children (products) in a row */}
@@ -163,7 +164,7 @@ import {
           {warrantChoice === "Yes" && (
             <>
             <p>
-              “Full refund of ${warrantAmount || "(Warrant Amount)"} if the quality is not up to par with advertised quality.”
+              Full refund of ${warrantAmount || "(Warrant Amount)"} if the quality is not up to par with advertised quality.
             </p>
             <input
               type="number"
@@ -286,6 +287,15 @@ import {
       <div>
         
         <p>You have chosen to produce <b>{producerPlayer.round.get("productionQuality")}</b> quality toothpaste and advertise it as <b>{producerPlayer.round.get("advertisementQuality")}</b> quality toothpase at a <b>price of ${producerPlayer.round.get("priceOfProduct")}</b>.</p>
+        <br/>
+        {producerPlayer.round.get("warrantChoice") === "Yes" && (
+            <>
+            <p>
+              You have also chosen to <b>warrant</b> your product with <b>${producerPlayer.round.get("warrantAmount")}</b> if the quality is not up to par with advertised quality.
+            </p>
+            <br/>
+          </>
+          )}
         <h1><p>This gives a <b>profit of  ${profit}</b> per product sold.</p></h1>
 
       </div>

@@ -13,6 +13,8 @@ export function SalesResults({roundNumber}) {
   const advertisementQuality = player.get(roundNumberText.concat("_choices"))[1]
   const priceOfProduct = player.get(roundNumberText.concat("_choices"))[2]
   const productionCost = player.get(roundNumberText.concat("_choices"))[3]
+  const warrantChoice = player.get(roundNumberText.concat("_choices"))[4]
+  const warrantAmount = player.get(roundNumberText.concat("_choices"))[5]
   let imageUrl = "";
   //console.log('roundNumberText', roundNumberText)
   if (advertisementQuality === "high") {
@@ -38,9 +40,22 @@ export function SalesResults({roundNumber}) {
   //  }
   const numBuyers = Math.floor((Math.random() * (max - min ) + min)) ;
 
+  //moved outside so it can be used in the javascript if necessary
 
-  const salesCount = numBuyers * (priceOfProduct - productionCost);
-  const finalScore = currentScore + salesCount
+  const minWarrantyUsers = 1;
+  const maxWarrantyUsers = numBuyers;
+  const numWarrantyUsers = Math.floor((Math.random() * (maxWarrantyUsers - minWarrantyUsers ) + minWarrantyUsers));
+  
+  let salesCount = 0;
+
+  if (warrantChoice === "Yes" ) {
+    salesCount = (numBuyers * (priceOfProduct - productionCost)) - (numWarrantyUsers*warrantAmount);
+    const finalScore = currentScore + salesCount
+  } else {
+    salesCount = numBuyers * (priceOfProduct - productionCost);
+    const finalScore = currentScore + salesCount
+  }
+
 
   function handleSubmit() {
     console.log('Moving on from results round');
@@ -51,7 +66,7 @@ export function SalesResults({roundNumber}) {
   return (
     <div className="mt-3 sm:mt-5 p-20">
       <h1 className="text-lg leading-6 font-medium text-gray-900">
-        Sales
+      <b>Sales</b> 
       </h1>
       <div className="text-lg mt-2 mb-6">
         {/* <p className="text-sm text-gray-500"> */}
@@ -71,8 +86,23 @@ export function SalesResults({roundNumber}) {
           It was advertised to an audience of 100 users, and {numBuyers} users bought your product.
         </p>
         <p> 
-          You earned ${priceOfProduct - productionCost}  per product x {numBuyers} units sold = {salesCount} points in sales.
+          You earned ${priceOfProduct - productionCost}  per product x {numBuyers} units sold = {(numBuyers * (priceOfProduct - productionCost))} points in sales.
         </p><br/>
+        {warrantChoice === "Yes" && (
+            <>
+            <p>
+            <b>Warranty Users</b> 
+            </p>
+            <p>
+              {numWarrantyUsers} buyers made use of the ${warrantAmount} warranty which brought the earnings down to:
+              ({numBuyers} x {priceOfProduct - productionCost}) - ({numWarrantyUsers} x {warrantAmount}) = {salesCount} 
+            </p>
+            <br/>
+            </>
+          )}
+          
+        <b>Total</b>
+        <br/>
         <p> Your score for this round is: {salesCount} </p>
         <p> Your total score is: {salesCount + currentScore} </p><br/>
         <p> 
