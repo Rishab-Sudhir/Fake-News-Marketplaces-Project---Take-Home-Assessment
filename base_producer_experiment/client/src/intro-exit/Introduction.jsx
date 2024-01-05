@@ -16,7 +16,7 @@ export function Introduction({ next }) {
           In <strong>each round of the game</strong>, you will:
         <br />
         <p>
-          (a) choose the quality of the product you produce. Choose how to advertise them. Choose what price you want to sell the product for.
+          (a) choose the quality of the product you produce. Choose how to advertise them. Choose what price you want to sell the product for. Choose if you want to warrant the product.
         </p>
         <p> 
           (b) obtain the results, gains and losses, based on the sales from the product you chose to advertise. 

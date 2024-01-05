@@ -17,6 +17,10 @@ import {
 
     //Const for checking the state of the warrantChoice
     const [warrantChoice, setWarrantChoice] = useState(null);
+
+    //Const for updating the state of the warrantAmount as the user changes its value
+    const [warrantAmount, setWarrantAmount] = useState(player.round.get("warrantAmount") || "");
+
     //console.log('roundNumberText', roundNumberText);
     function handleChange() {
       console.log("something happened");
@@ -61,9 +65,13 @@ import {
       console.log("Saved warrantChoice to player.round object: ", warrantChoice);
     }
 
-    function handleWarrantAmount(e, warrantAmount) {
-      player.round.set("warrantAmount", warrantAmount);
-      console.log("Saved warrantAmount to player.round object: ", warrantAmount);
+    function handleWarrantAmount(e) {
+      const amount = parseInt(e.target.value, 10); // Get the integer value from the input
+      if (!isNaN(amount)) { // Check if the parsed value is a valid number
+        setWarrantAmount(amount); // Update local state
+        player.round.set("warrantAmount", amount); // Update player round data
+        console.log("Saved warrantAmount to player.round object: ", amount);
+      }
     }
   
     const isResultStage = stage.get("name") === "result";
@@ -138,7 +146,7 @@ import {
           <PriceButton text={'$15'} on_button_click={(e) => handlePriceChoice(e, 15)}></PriceButton>
           </div>
 
-          <br/><br/><br/><br/><br/>
+          <br/><br/><br/>
           <h1><b>Would you like want a warrant for your product?</b></h1>
 
           <p><strong>Note: </strong>An express warranty is an expressed guarantee from a seller or manufacturer <br/>  to a buyer that the purchased product performs according to certain specifications.</p>
@@ -149,11 +157,22 @@ import {
           <WarrantChoiceButton text={'No'} on_button_click={(e) => handleWarrantChoice(e, "No")}></WarrantChoiceButton>
           </div>
 
-          <br/><br/><br/><br/><br/>
+          <br/><br/>
 
           {/* Conditional rendering based on warrantChoice */}
           {warrantChoice === "Yes" && (
-            <h1><b>Set the warrant amount:</b></h1>
+            <>
+            <p>
+              “Full refund of ${warrantAmount || "(Warrant Amount)"} if the quality is not up to par with advertised quality.”
+            </p>
+            <input
+              type="number"
+              placeholder="Enter refund amount"
+              value={warrantAmount}
+              onChange={handleWarrantAmount}
+              min="0" // This ensures that the minimum number allowed is 0, which prevents negative numbers
+            />
+          </>
           )}
 
           <ProfitMarginCalculation producerPlayer = {player}/>
